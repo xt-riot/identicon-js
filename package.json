@@ -1,0 +1,44 @@
+{
+  "name": "identicon",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint --quiet --config eslint.config.mjs",
+    "lint:fix": "eslint --fix -q --ignore-path .eslintignore --config .eslint.config.mjs",
+    "format": "prettier --ignore-path .gitignore --write \"src/**/*.+(js|ts|json)\"",
+    "build": "tsc -p tsconfig.json",
+    "start": "node ./dist/main.js",
+    "dev": "tsx src/main.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xt-riot/identicon-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xt-riot/identicon-js/issues"
+  },
+  "homepage": "https://github.com/xt-riot/identicon-js#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.6.0",
+    "@types/node": "^20.14.9",
+    "eslint": "^9.6.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.6.0",
+    "prettier": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.2",
+    "typescript-eslint": "^7.14.1"
+  },
+  "overrides": {
+    "eslint": "^9.6.0"
+  },
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "js-sha3": "^0.9.3"
+  }
+}
