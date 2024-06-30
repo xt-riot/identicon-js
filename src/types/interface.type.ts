@@ -1,4 +1,3 @@
-import { THashedOutput } from './hashHelper.type.js';
 import type { ImageData } from 'canvas';
 
 type Enumerate<
@@ -20,12 +19,12 @@ export type TColor = {
 };
 
 export interface IIdenticon {
-  getColor(input: THashedOutput): TColor;
+  getColor(input: Buffer): TColor;
   getImage(
-    input: THashedOutput,
+    input: Buffer,
     color: ReturnType<IIdenticon['getColor']>,
     width: number,
     height: number,
   ): ImageData;
-  getIdenticon(input: string, width?: number, height?: number): Buffer;
+  getIdenticon(input: Buffer, width?: number, height?: number): Buffer;
 }

@@ -1,6 +1,5 @@
 import { sha2_512_hasher } from './../services/hashHelper/hashers/sha512.hasher.js';
 import { sha3_512_hasher } from '../services/hashHelper/hashers/sha3_512.hasher.js';
-import { THashedOutput, TUnVerifiedOutput } from '../types/hashHelper.type.js';
 
 export default class HashingFactory {
   private sha3_512: typeof sha2_512_hasher;
@@ -25,25 +24,23 @@ export default class HashingFactory {
 }
 
 class Hasher {
-  private hasher: (input: string) => TUnVerifiedOutput;
+  private hasher: (input: string) => String;
 
   constructor(hasher: typeof this.hasher) {
     this.hasher = hasher;
   }
 
-  public hashInputVerified(input: string): THashedOutput {
+  public hashInputVerified(input: string) {
     let hashed = this.hasher(input);
 
     while (!this.verifyHashOutput(hashed)) {
       hashed = this.hasher(input);
     }
 
-    return hashed;
+    return Buffer.from(hashed, 'utf8');
   }
 
-  private verifyHashOutput(
-    output: TUnVerifiedOutput | THashedOutput,
-  ): output is THashedOutput {
+  private verifyHashOutput(output: String | never): output is String {
     return output.length >= 50;
   }
 }
