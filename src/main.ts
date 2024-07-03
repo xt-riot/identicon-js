@@ -1,14 +1,22 @@
-import fs from 'fs';
+import sha3 from 'js-sha3';
 
-import identicon from './services/identicon.service.js';
-import HashingFactory from './factories/hash.factory.js';
+import { getPixelsArray } from './getPixels.js';
+import { exportAsJpeg } from './exportImage.js';
+
+const identiconWidth = 10;
+const identiconHeight = 10;
 
 const input = 'konstantinos.karachristos@holidayextras.com';
 
-const hasher = new HashingFactory().get_hasher();
+const inputAsHashBuffer = Buffer.from(
+  sha3.sha3_512(input).toLowerCase(),
+  'utf8',
+);
 
-const hashedInput = hasher.hashInputVerified(input);
+const image = getPixelsArray(
+  inputAsHashBuffer,
+  identiconWidth,
+  identiconHeight,
+);
 
-const image = identicon.getIdenticon(hashedInput);
-
-fs.writeFileSync('./image.jpeg', image);
+exportAsJpeg(image, identiconWidth, identiconHeight);
