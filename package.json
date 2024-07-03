@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "lint": "eslint --quiet --config eslint.config.mjs",
-    "lint:fix": "eslint --fix -q --ignore-path .eslintignore --config .eslint.config.mjs",
+    "lint:fix": "eslint --fix --quiet --config eslint.config.mjs",
     "format": "prettier --ignore-path .gitignore --write \"src/**/*.+(js|ts|json)\"",
     "build": "tsc -p tsconfig.json",
     "start": "node ./dist/main.js",
