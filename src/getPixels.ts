@@ -21,7 +21,7 @@ export function getPixelsArray(input: Buffer, width: number, height: number) {
     const line = y * width * 4;
     for (let x = 0; x < width / 2; x++) {
       const pixelCounter = x * 4 + line;
-      const mirroredPixel = 40 - (x + 1) * 4 + line;
+      const mirroredPixel = (4 * width) - (x + 1) * 4 + line;
 
       if (input[counter] % 2 === 0) {
         imageData[pixelCounter] = color.red;
