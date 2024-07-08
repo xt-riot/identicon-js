@@ -3,8 +3,20 @@ import fs from 'fs';
 
 import type { ImageData } from 'canvas';
 
+function convertIdenticonInfoToPixelArray(imageData: { color: { red: number; green: number; blue: number }; data: number[] }) {
+  const result = new Uint8ClampedArray(imageData.data.length * 4);
+  imageData.data.forEach((value, index) => {
+    if (value) {
+      result.set([imageData.color.red, imageData.color.green, imageData.color.blue, 255], index * 4);
+    } else {
+      result.set([0, 0, 0, 255], index * 4);
+    }
+  })
+  return result;
+}
+
 function createCanvasData(
-  input: Uint8ClampedArray,
+  imageData: Uint8ClampedArray,
   width: number,
   height: number,
   newWidth = width,
@@ -14,7 +26,7 @@ function createCanvasData(
   const ctx = canvas.getContext('2d');
 
   const inputAsImageData = createImageData(
-    input,
+    imageData,
     width,
     height,
   );
@@ -27,43 +39,33 @@ function createCanvasData(
 }
 
 export function exportAsJpeg(
-  imageData: Uint8ClampedArray,
+  input: { color: { red: number; green: number; blue: number }; data: number[] },
   width: number,
   height: number,
   newWidth = width,
   newHeight = height
-): boolean {
-  const canvasData = createCanvasData(imageData, width, height, newWidth, newHeight);
+) {
+  const pixelArray = convertIdenticonInfoToPixelArray(input)
+  const canvasData = createCanvasData(pixelArray, width, height, newWidth, newHeight);
 
   const jpegBuffer = canvasData.toBuffer('image/jpeg', { quality: 1 });
 
-  try {
-    fs.writeFileSync('./image.jpeg', jpegBuffer);
-    return true;
-  } catch (error) {
-    console.error('Error writing image to file', error);
-    return false;
-  }
+  fs.writeFileSync('./image.jpeg', jpegBuffer);
 }
 
 export function exportAsPng(
-  imageData: Uint8ClampedArray,
+  input: { color: { red: number; green: number; blue: number }; data: number[] },
   width: number,
   height: number,
   newWidth = width,
   newHeight = height
-): boolean {
-  const canvasData = createCanvasData(imageData, width, height, newWidth, newHeight);
+) {
+  const pixelArray = convertIdenticonInfoToPixelArray(input)
+  const canvasData = createCanvasData(pixelArray, width, height, newWidth, newHeight);
 
   const pngBuffer = canvasData.toBuffer('image/png');
 
-  try {
-    fs.writeFileSync('./image.png', pngBuffer);
-    return true;
-  } catch (error) {
-    console.error('Error writing image to file', error);
-    return false;
-  }
+  fs.writeFileSync('./image.png', pngBuffer);
 }
 
 // NOT USED YET
