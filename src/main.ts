@@ -1,6 +1,6 @@
 import sha3 from 'js-sha3';
 
-import { getIdenticonInformation } from './getPixels.js';
+import { getIdenticonInformation } from './getIdenticon.js';
 import { exportToImage } from './exportImage.js';
 
 const identiconWidth = 10;
