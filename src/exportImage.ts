@@ -6,11 +6,7 @@ import type { ImageData } from 'canvas';
 function convertIdenticonInfoToPixelArray(imageData: { color: { red: number; green: number; blue: number }; data: number[] }) {
   const result = new Uint8ClampedArray(imageData.data.length * 4);
   imageData.data.forEach((value, index) => {
-    if (value) {
-      result.set([imageData.color.red, imageData.color.green, imageData.color.blue, 255], index * 4);
-    } else {
-      result.set([0, 0, 0, 255], index * 4);
-    }
+    result.set(value ? [imageData.color.red, imageData.color.green, imageData.color.blue, 255] : [0, 0, 0, 255], index * 4);
   })
   return result;
 }
