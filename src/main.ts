@@ -1,6 +1,6 @@
 import sha3 from 'js-sha3';
 
-import { getPixelsArray } from './getPixels.js';
+import { getIdenticonInformation } from './getPixels.js';
 import { exportAsJpeg } from './exportImage.js';
 
 const identiconWidth = 10;
@@ -13,10 +13,6 @@ const inputAsHashBuffer = Buffer.from(
   'utf8',
 );
 
-const image = getPixelsArray(
-  inputAsHashBuffer,
-  identiconWidth,
-  identiconHeight,
-);
+const image = getIdenticonInformation(inputAsHashBuffer, identiconWidth, identiconHeight);
 
 exportAsJpeg(image, identiconWidth, identiconHeight);
