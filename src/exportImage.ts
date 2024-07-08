@@ -38,7 +38,8 @@ function createCanvasData(
     : canvas;
 }
 
-export function exportAsJpeg(
+export function exportToImage(
+  type: 'jpeg' | 'png',
   input: { color: { red: number; green: number; blue: number }; data: number[] },
   width: number,
   height: number,
@@ -48,24 +49,15 @@ export function exportAsJpeg(
   const pixelArray = convertIdenticonInfoToPixelArray(input)
   const canvasData = createCanvasData(pixelArray, width, height, newWidth, newHeight);
 
-  const jpegBuffer = canvasData.toBuffer('image/jpeg', { quality: 1 });
+  let imageBuffer: Buffer
 
-  fs.writeFileSync('./image.jpeg', jpegBuffer);
-}
+  if (type === 'jpeg') {
+    imageBuffer = canvasData.toBuffer('image/jpeg', { quality: 1 });
+  } else {
+    imageBuffer = canvasData.toBuffer('image/png');
+  }
 
-export function exportAsPng(
-  input: { color: { red: number; green: number; blue: number }; data: number[] },
-  width: number,
-  height: number,
-  newWidth = width,
-  newHeight = height
-) {
-  const pixelArray = convertIdenticonInfoToPixelArray(input)
-  const canvasData = createCanvasData(pixelArray, width, height, newWidth, newHeight);
-
-  const pngBuffer = canvasData.toBuffer('image/png');
-
-  fs.writeFileSync('./image.png', pngBuffer);
+  fs.writeFileSync(`./image.${type}`, imageBuffer);
 }
 
 // NOT USED YET
