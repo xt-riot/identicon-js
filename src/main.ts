@@ -6,7 +6,7 @@ import { exportToImage } from './exportImage.js';
 const identiconWidth = 10;
 const identiconHeight = 10;
 
-const input = 'konstantinos.karachristos@holidayextras.com';
+const input = process.argv[2];
 
 const inputAsHashBuffer = Buffer.from(
   sha3.sha3_512(input).toLowerCase(),
