@@ -11,11 +11,11 @@ const input = process.argv[2];
 const inputAsHashBuffer = Buffer.from(
   createHash('sha256').update(input).digest('hex').toLowerCase(),
   'utf8',
-);
+).toJSON().data;
 
 const identiconArrays = {
   custom: getIdenticonInformation(inputAsHashBuffer, identiconWidth, identiconHeight),
   lodash: buildIdenticonArrayWithLodash(inputAsHashBuffer, identiconWidth),
 }
 
-exportToImage('jpeg', identiconArrays.custom, identiconWidth, identiconHeight);
+exportToImage('jpeg', identiconArrays.lodash, identiconWidth, identiconHeight);

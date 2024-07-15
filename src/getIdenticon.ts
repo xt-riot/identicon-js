@@ -6,7 +6,7 @@ type TColor = {
   blue: number;
 };
 
-function getColor(input: Buffer): TColor {
+function getColor(input: number[]): TColor {
   return {
     red: input[0],
     green: input[1],
@@ -14,7 +14,7 @@ function getColor(input: Buffer): TColor {
   };
 }
 
-export function getIdenticonInformation(input: Buffer, width: number, height: number) {
+export function getIdenticonInformation(input: number[], width: number, height: number) {
   return {
     color: getColor(input),
     // eslint-disable-next-line prefer-spread
@@ -27,11 +27,10 @@ export function getIdenticonInformation(input: Buffer, width: number, height: nu
   }
 }
 
-export function buildIdenticonArrayWithLodash(input: Buffer, width: number) {
-  const inputArray = input.toJSON().data;
+export function buildIdenticonArrayWithLodash(input: number[], width: number) {
   return {
     color: getColor(input),
-    data: _.chain(inputArray)
+    data: _.chain(input)
             .chunk(width / 2)
             .map(array => [...array, ...array.reverse()].map(value => value % 2 === 0 ? 1 : 0))
             .flatten().value()
