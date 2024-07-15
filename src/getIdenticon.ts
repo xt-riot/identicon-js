@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 type TColor = {
   red: number;
   green: number;
@@ -22,5 +24,16 @@ export function getIdenticonInformation(input: Buffer, width: number, height: nu
       }
       return input[width - 1 - index + width * Math.floor((index / width)) * 3 / 2] % 2 === 0 ? 1 : 0;
     })
+  }
+}
+
+export function buildIdenticonArrayWithLodash(input: Buffer, width: number) {
+  const inputArray = input.toJSON().data;
+  return {
+    color: getColor(input),
+    data: _.chain(inputArray)
+            .chunk(width / 2)
+            .map(array => [...array, ...array.reverse()].map(value => value % 2 === 0 ? 1 : 0))
+            .flatten().value()
   }
 }
