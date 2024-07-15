@@ -32,7 +32,7 @@ export function buildIdenticonArrayWithLodash(input: number[], width: number) {
     color: getColor(input),
     data: _.chain(input)
             .chunk(width / 2)
-            .map(array => [...array, ...array.reverse()].map(value => value % 2 === 0 ? 1 : 0))
-            .flatten().value()
+            .flatMap(array => [...array, ...array.reverse()].map(value => value % 2 === 0 ? 1 : 0))
+            .value()
   }
 }
