@@ -8,7 +8,7 @@ const identiconHeight = 10;
 
 const input = process.argv[2];
 
-const inputAsHashBuffer = createHash('sha256').update(input).digest().toJSON().data;
+const inputAsHashBuffer = createHash('sha512').update(input).digest().toJSON().data;
 
 const identiconArray = buildIdenticonArray(inputAsHashBuffer, identiconWidth, identiconHeight);
 
